@@ -19,9 +19,11 @@ public class Evaluation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int evaluatioId;
-	
+    private int evaluationId;
+
     private int userId;
 	
-	private float evaluationName;
+	private String evaluationName;
+	
+	private int parameterModelId;
 }

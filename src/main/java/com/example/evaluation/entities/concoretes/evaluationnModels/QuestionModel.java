@@ -21,7 +21,7 @@ public class QuestionModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
     
-    private int raterId;
+    private int topicId;
 	
 	private float weight;
 	

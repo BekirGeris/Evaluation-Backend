@@ -1,4 +1,4 @@
-package com.example.evaluation.entities.concoretes.evaluationnModels;
+package com.example.evaluation.entities.concoretes.evaluated;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "RaterModels")
-public class RaterModel {
+@Table(name = "Topics")
+public class Topic {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int raterId;
-    
-    private int evaluationModelId;
+    private int topicId;
 	
-	private float raterName;
+    private int evaluationId;
+	
+	private String topicName;
 	
 	private float weight;
 	

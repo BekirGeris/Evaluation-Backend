@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.example.evaluation.business.abstracts.UserService;
 import com.example.evaluation.core.utillities.result.DataResult;
 import com.example.evaluation.core.utillities.result.ErrorDataResult;
+import com.example.evaluation.core.utillities.result.ErrorResult;
 import com.example.evaluation.core.utillities.result.Result;
 import com.example.evaluation.core.utillities.result.SuccessDataResult;
 import com.example.evaluation.core.utillities.result.SuccessResult;
@@ -42,7 +43,11 @@ public class UserManager implements UserService{
 	}
 	
 	@Override
-	public Result add(User user) {
+	public Result addUser(User user) {
+		User existingUser = userDao.getByUserNameAndPassword(user.getUserName(), user.getPassword());
+		if(existingUser != null) {
+			return new ErrorResult("Kullanıcı zaten mevcut.");
+		}
 		userDao.save(user);
 		return new SuccessResult("Kullanıcı eklendi.");
 	}

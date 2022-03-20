@@ -23,5 +23,7 @@ public class EvaluationModel {
 	
     private int userId;
 	
-	private float evaluationModelName;
+	private String evaluationModelName;
+	
+	private int parameterModelId;
 }

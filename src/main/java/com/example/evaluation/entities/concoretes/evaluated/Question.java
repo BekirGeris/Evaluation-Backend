@@ -20,10 +20,8 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int questionId;
-	
-    private int evaluatedId;
     
-    private int raterId;
+    private int topicId;
 	
 	private float weight;
 	

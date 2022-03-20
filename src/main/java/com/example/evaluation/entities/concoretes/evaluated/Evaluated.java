@@ -29,5 +29,5 @@ public class Evaluated {
 	
     private String evaluatedNumber;
 	
-    private String evaluatedPoint;
+    private float evaluatedPoint;
 }

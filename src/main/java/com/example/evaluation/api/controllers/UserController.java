@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.evaluation.business.abstracts.UserService;
 import com.example.evaluation.core.utillities.result.DataResult;
 import com.example.evaluation.core.utillities.result.Result;
-import com.example.evaluation.core.utillities.result.SuccessResult;
 import com.example.evaluation.entities.concoretes.User;
 
 @CrossOrigin
@@ -37,9 +36,8 @@ public class UserController {
 		return userService.getByUserNameAndPassword(userName, password);
 	}	
 	
-	@PostMapping("/add")
-	public Result add(@RequestBody User user) {
-		userService.add(user);
-		return new SuccessResult("kullanıcı eklendi");
+	@PostMapping("/addUser")
+	public Result addUser(@RequestBody User user) {
+		return userService.addUser(user);
 	}
 }

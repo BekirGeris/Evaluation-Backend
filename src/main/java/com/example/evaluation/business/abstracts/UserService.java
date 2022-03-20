@@ -13,5 +13,5 @@ public interface UserService {
 	
 	DataResult<User> getByUserNameAndPassword(String userName, String password);
 
-	Result add(User user);
+	Result addUser(User user);
 }
