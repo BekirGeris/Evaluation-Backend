@@ -25,5 +25,7 @@ public class EvaluationModel {
 	
 	private String evaluationModelName;
 	
+	private String decs;
+	
 	private int parameterModelId;
 }

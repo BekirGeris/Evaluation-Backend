@@ -11,4 +11,6 @@ import com.example.evaluation.entities.concoretes.evaluationnModels.TopicModel;
 public interface TopicModelDao extends JpaRepository<TopicModel, Integer>{
 
 	List<TopicModel> getByEvaluationModelId(int evaluationModelId);
+	
+	TopicModel findTopByOrderByTopicIdDesc();
 }

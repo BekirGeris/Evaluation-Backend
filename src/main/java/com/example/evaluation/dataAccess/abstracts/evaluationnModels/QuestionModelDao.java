@@ -11,4 +11,6 @@ import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionMode
 public interface QuestionModelDao extends JpaRepository<QuestionModel, Integer>{
 
 	List<QuestionModel> getByTopicId(int topicId);
+	
+	QuestionModel findTopByOrderByQuestionIdDesc();
 }

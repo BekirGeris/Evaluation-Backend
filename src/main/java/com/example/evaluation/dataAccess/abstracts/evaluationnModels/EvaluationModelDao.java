@@ -13,5 +13,8 @@ public interface EvaluationModelDao extends JpaRepository<EvaluationModel, Integ
 	List<EvaluationModel> getByUserId(int userId);
 	
 	EvaluationModel getByEvaluationModelId(int evaluationModelId);
-
+	
+	EvaluationModel findTopByOrderByEvaluationModelIdDesc();
+	
+	EvaluationModel getByUserIdAndEvaluationModelName(int userId, String evaluationModelName);
 }

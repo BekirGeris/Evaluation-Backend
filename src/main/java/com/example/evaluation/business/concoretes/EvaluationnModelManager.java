@@ -3,6 +3,7 @@ package com.example.evaluation.business.concoretes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.example.evaluation.business.abstracts.evaluationnModels.EvaluationModelService;
@@ -10,6 +11,7 @@ import com.example.evaluation.business.abstracts.evaluationnModels.ParameterMode
 import com.example.evaluation.business.abstracts.evaluationnModels.QuestionModelService;
 import com.example.evaluation.business.abstracts.evaluationnModels.TopicModelService;
 import com.example.evaluation.core.utillities.result.DataResult;
+import com.example.evaluation.core.utillities.result.ErrorResult;
 import com.example.evaluation.core.utillities.result.Result;
 import com.example.evaluation.core.utillities.result.SuccessDataResult;
 import com.example.evaluation.core.utillities.result.SuccessResult;
@@ -17,6 +19,9 @@ import com.example.evaluation.dataAccess.abstracts.evaluationnModels.EvaluationM
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.ParameterModelDao;
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.QuestionModelDao;
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.TopicModelDao;
+import com.example.evaluation.entities.concoretes.dto.EvaluationModelDto;
+import com.example.evaluation.entities.concoretes.dto.QuestionModelDto;
+import com.example.evaluation.entities.concoretes.dto.TopicModelDto;
 import com.example.evaluation.entities.concoretes.evaluationnModels.EvaluationModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.ParameterModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
@@ -66,26 +71,35 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 	}
 
 	@Override
-	public Result addQuestionModel(QuestionModel questionModel) {
-		questionModelDao.save(questionModel);
-		return new SuccessResult("Soru Eklendi.");
-	}
-
-	@Override
-	public Result addTopicModel(TopicModel topicModel) {
-		topicModelDao.save(topicModel);
-		return new SuccessResult("Ana Başlık Eklendi.");
-	}
-
-	@Override
 	public Result addParameterModel(ParameterModel parameterModel) {
 		parameterModelDao.save(parameterModel);
 		return new SuccessResult("Parametreler Eklendi.");
 	}
 
 	@Override
-	public Result addEvaluationModel(EvaluationModel evaluationModel) {
+	public Result addEvaluationModel(EvaluationModelDto evaluationModelDto) {
+		
+		for (EvaluationModel item : evaluationModelDao.getByUserId(evaluationModelDto.getUserId())) {
+			if(evaluationModelDto.getEvaluationModelName().equals(item.getEvaluationModelName())) {
+				return new ErrorResult("Bu isme sahip bir değerlendirme modeli zaten var");
+			}
+		}
+		
+		EvaluationModel evaluationModel = new EvaluationModel(0, evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName(), evaluationModelDto.getDecs(), evaluationModelDto.getParameterModelId());
 		evaluationModelDao.save(evaluationModel);
+		evaluationModel = evaluationModelDao.findTopByOrderByEvaluationModelIdDesc();
+		
+		for (TopicModelDto topicModelDto : evaluationModelDto.getTopicModelDaos()) {
+			TopicModel topicModel = new TopicModel(0, evaluationModel.getEvaluationModelId(), topicModelDto.getTopicName(), topicModelDto.getWeight());
+			topicModelDao.save(topicModel);
+			topicModel = topicModelDao.findTopByOrderByTopicIdDesc();			
+			
+			for (QuestionModelDto questionModelDto : topicModelDto.getQuestionModelDtos()) {
+				QuestionModel questionModel = new QuestionModel(0, topicModel.getTopicId(), questionModelDto.getWeight(), questionModelDto.getQuestion());
+				questionModelDao.save(questionModel);
+			}
+		}
+		
 		return new SuccessResult("Değerlendirme Modeli Eklendi.");
 	}
 

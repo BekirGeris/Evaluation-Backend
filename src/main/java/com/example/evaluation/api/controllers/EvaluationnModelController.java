@@ -16,6 +16,7 @@ import com.example.evaluation.business.abstracts.evaluationnModels.QuestionModel
 import com.example.evaluation.business.abstracts.evaluationnModels.TopicModelService;
 import com.example.evaluation.core.utillities.result.DataResult;
 import com.example.evaluation.core.utillities.result.Result;
+import com.example.evaluation.entities.concoretes.dto.EvaluationModelDto;
 import com.example.evaluation.entities.concoretes.evaluationnModels.EvaluationModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.ParameterModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
@@ -83,7 +84,7 @@ public class EvaluationnModelController {
 	}
 
 	@PostMapping("/addEvaluationModel")
-	public Result addEvaluationModel(@RequestBody EvaluationModel evaluationModel) {
-		return evaluationModelService.addEvaluationModel(evaluationModel);
+	public Result addEvaluationModel(@RequestBody EvaluationModelDto evaluationModelDto) {
+		return evaluationModelService.addEvaluationModel(evaluationModelDto);
 	}
 }
