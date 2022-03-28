@@ -68,16 +68,6 @@ public class EvaluationnModelController {
 		return topicModelService.getByEvaluationModelId(evaluationModelId);
 	}
 
-	@PostMapping("/addQuestionModel")
-	public Result addQuestionModel(@RequestBody QuestionModel questionModel) {
-		return questionModelService.addQuestionModel(questionModel);
-	}
-
-	@PostMapping("/addTopicModel")
-	public Result addTopicModel(@RequestBody TopicModel topicModel) {
-		return topicModelService.addTopicModel(topicModel);
-	}
-
 	@PostMapping("/addParameterModel")
 	public Result addParameterModel(@RequestBody ParameterModel parameterModel) {
 		return parameterModelService.addParameterModel(parameterModel);
