@@ -3,7 +3,6 @@ package com.example.evaluation.business.concoretes;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import com.example.evaluation.business.abstracts.evaluationnModels.EvaluationModelService;
@@ -70,6 +69,11 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 		return new SuccessDataResult<List<TopicModel>>(topicModelDao.getByEvaluationModelId(evaluationModelId), "Değerlendirilmeye Ait sorular Getirildi.");
 	}
 
+	@Override
+	public DataResult<List<ParameterModel>> getAll() {
+		return new SuccessDataResult<List<ParameterModel>>(parameterModelDao.findAll(), "Değerlendirilmeye Ait sorular Getirildi.");
+	}
+	
 	@Override
 	public Result addParameterModel(ParameterModel parameterModel) {
 		parameterModelDao.save(parameterModel);

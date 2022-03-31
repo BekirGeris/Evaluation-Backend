@@ -52,6 +52,11 @@ public class EvaluationnModelController {
 	public DataResult<ParameterModel> getParameterModelByParameterModelId(int parameterModelId) {
 		return parameterModelService.getByParameterModelId(parameterModelId);
 	}
+	
+	@GetMapping("/getAllParameterModel")
+	public DataResult<List<ParameterModel>> getAll() {
+		return parameterModelService.getAll();
+	}
 
 	@GetMapping("/getQuestionModelsByTopicId")
 	public DataResult<List<QuestionModel>> getQuestionModelsByTopicId(int topicId) {
