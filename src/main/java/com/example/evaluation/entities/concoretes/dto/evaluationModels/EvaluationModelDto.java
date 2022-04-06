@@ -1,4 +1,4 @@
-package com.example.evaluation.entities.concoretes.dto;
+package com.example.evaluation.entities.concoretes.dto.evaluationModels;
 
 import java.util.List;
 

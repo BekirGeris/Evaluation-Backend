@@ -18,9 +18,9 @@ import com.example.evaluation.dataAccess.abstracts.evaluationnModels.EvaluationM
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.ParameterModelDao;
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.QuestionModelDao;
 import com.example.evaluation.dataAccess.abstracts.evaluationnModels.TopicModelDao;
-import com.example.evaluation.entities.concoretes.dto.EvaluationModelDto;
-import com.example.evaluation.entities.concoretes.dto.QuestionModelDto;
-import com.example.evaluation.entities.concoretes.dto.TopicModelDto;
+import com.example.evaluation.entities.concoretes.dto.evaluationModels.EvaluationModelDto;
+import com.example.evaluation.entities.concoretes.dto.evaluationModels.QuestionModelDto;
+import com.example.evaluation.entities.concoretes.dto.evaluationModels.TopicModelDto;
 import com.example.evaluation.entities.concoretes.evaluationnModels.EvaluationModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.ParameterModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;

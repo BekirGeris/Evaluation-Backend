@@ -22,6 +22,8 @@ public class Evaluated {
     private int evaluatedId;
 	
     private int evaluationId;
+    
+    private int userId;
 	
     private String evaluatedFirstName;
 

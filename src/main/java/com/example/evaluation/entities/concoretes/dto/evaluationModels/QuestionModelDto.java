@@ -1,11 +1,9 @@
-package com.example.evaluation.entities.concoretes.dto;
+package com.example.evaluation.entities.concoretes.dto.evaluationModels;
 
 import lombok.Data;
 
 @Data
 public class QuestionModelDto {
-
-    private int topicId;
 	
 	private float weight;
 	
