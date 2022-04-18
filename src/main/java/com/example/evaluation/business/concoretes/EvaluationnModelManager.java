@@ -60,8 +60,15 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 	}
 
 	@Override
-	public DataResult<EvaluationModel> getEvaluationWithEvaluationModelId(int evaluationModelId) {
-		return new SuccessDataResult<EvaluationModel>(evaluationModelDao.getByEvaluationModelId(evaluationModelId), "Değerlendirme Modeli Getirildi.");
+	public DataResult<EvaluationModelDto> getEvaluationWithEvaluationModelId(int evaluationModelId) {
+		EvaluationModelDto evaluationModelDto = new EvaluationModelDto(evaluationModelDao.getByEvaluationModelId(evaluationModelId));
+		
+		for (TopicModel topicModel : topicModelDao.getByEvaluationModelId(evaluationModelId)) {
+			List<QuestionModel> questionModels = questionModelDao.getByTopicId(topicModel.getTopicId());
+			evaluationModelDto.getTopicModelDtos().add(new TopicModelDto(topicModel, questionModels));
+		}
+		
+		return new SuccessDataResult<EvaluationModelDto>(evaluationModelDto, "Değerlendirme Modeli Getirildi.");
 	}
 
 	@Override
@@ -93,7 +100,7 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 		evaluationModelDao.save(evaluationModel);
 		evaluationModel = evaluationModelDao.findTopByOrderByEvaluationModelIdDesc();
 		
-		for (TopicModelDto topicModelDto : evaluationModelDto.getTopicModelDaos()) {
+		for (TopicModelDto topicModelDto : evaluationModelDto.getTopicModelDtos()) {
 			TopicModel topicModel = new TopicModel(0, evaluationModel.getEvaluationModelId(), topicModelDto.getTopicName(), topicModelDto.getWeight());
 			topicModelDao.save(topicModel);
 			topicModel = topicModelDao.findTopByOrderByTopicIdDesc();			
