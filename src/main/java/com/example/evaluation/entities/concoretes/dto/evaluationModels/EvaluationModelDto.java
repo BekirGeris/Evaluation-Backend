@@ -15,5 +15,5 @@ public class EvaluationModelDto {
 	
 	private int parameterModelId;
 	
-	private List<TopicModelDto> topicModelDaos;
+	private List<TopicModelDto> topicModelDtos;
 }

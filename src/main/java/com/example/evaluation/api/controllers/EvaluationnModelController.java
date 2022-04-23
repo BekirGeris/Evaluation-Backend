@@ -64,7 +64,7 @@ public class EvaluationnModelController {
 	}
 
 	@GetMapping("/getEvaluationModelByEvaluationModelId")
-	public DataResult<EvaluationModel> getEvaluationModelByEvaluationModelId(int evaluationModelId) {
+	public DataResult<EvaluationModelDto> getEvaluationModelByEvaluationModelId(int evaluationModelId) {
 		return evaluationModelService.getEvaluationWithEvaluationModelId(evaluationModelId);
 	}
 

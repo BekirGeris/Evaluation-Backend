@@ -13,7 +13,7 @@ public interface EvaluationModelService {
 
 	DataResult<List<EvaluationModel>> getByUserId(int userId);
 	
-	DataResult<EvaluationModel> getEvaluationWithEvaluationModelId(int evaluationModelId);
+	DataResult<EvaluationModelDto> getEvaluationWithEvaluationModelId(int evaluationModelId);
 
 	Result addEvaluationModel(EvaluationModelDto evaluationModelDto);
 }
