@@ -1,6 +1,5 @@
 package com.example.evaluation.business.concoretes;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,10 +90,8 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 	@Override
 	public Result addEvaluationModel(EvaluationModelDto evaluationModelDto) {
 		
-		for (EvaluationModel item : evaluationModelDao.getByUserId(evaluationModelDto.getUserId())) {
-			if(evaluationModelDto.getEvaluationModelName().equals(item.getEvaluationModelName())) {
-				return new ErrorResult("Bu isme sahip bir değerlendirme modeli zaten var");
-			}
+		if(evaluationModelDao.getByUserIdAndEvaluationModelName(evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName()) != null) {
+			return new ErrorResult("Bu isme sahip bir değerlendirme modeli zaten var");
 		}
 		
 		EvaluationModel evaluationModel = new EvaluationModel(0, evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName(), evaluationModelDto.getDecs(), evaluationModelDto.getParameterModelId());
