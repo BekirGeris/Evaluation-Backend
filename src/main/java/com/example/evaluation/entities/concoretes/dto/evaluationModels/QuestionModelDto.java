@@ -2,12 +2,18 @@ package com.example.evaluation.entities.concoretes.dto.evaluationModels;
 
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class QuestionModelDto {
 	
 	private int questionId;
+	
+	private int topicId;
 	
 	private float weight;
 	

@@ -1,5 +1,6 @@
 package com.example.evaluation.business.concoretes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,12 +63,12 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 	@Override
 	public DataResult<EvaluationModelDto> getEvaluationWithEvaluationModelId(int evaluationModelId) {
 		EvaluationModelDto evaluationModelDto = new EvaluationModelDto(evaluationModelDao.getByEvaluationModelId(evaluationModelId));
-		
+
 		for (TopicModel topicModel : topicModelDao.getByEvaluationModelId(evaluationModelId)) {
 			List<QuestionModel> questionModels = questionModelDao.getByTopicId(topicModel.getTopicId());
 			evaluationModelDto.getTopicModelDtos().add(new TopicModelDto(topicModel, questionModels));
 		}
-		
+
 		return new SuccessDataResult<EvaluationModelDto>(evaluationModelDto, "Değerlendirme Modeli Getirildi.");
 	}
 

@@ -1,21 +1,22 @@
 package com.example.evaluation.entities.concoretes.dto.evaluationModels;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.example.evaluation.entities.concoretes.evaluationnModels.EvaluationModel;
-import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
-import com.example.evaluation.entities.concoretes.evaluationnModels.TopicModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EvaluationModelDto {
 
+	private int evaluationModelId;
+	
     private int userId;
-    
-    private int evaluationModelId;
 	
 	private String evaluationModelName;
 	
@@ -32,5 +33,5 @@ public class EvaluationModelDto {
 		this.decs = evaluationModel.getDecs();
 		this.parameterModelId = evaluationModel.getParameterModelId();
 		topicModelDtos = new ArrayList<TopicModelDto>();
-		}
+	}
 }

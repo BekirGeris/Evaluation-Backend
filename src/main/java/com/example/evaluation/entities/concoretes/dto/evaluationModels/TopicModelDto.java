@@ -6,13 +6,17 @@ import java.util.List;
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.TopicModel;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TopicModelDto {
 	
-	 private int topicId;
-	 
+	private int topicId;
+	
 	private String topicName;
 	
 	private float weight;
