@@ -17,6 +17,8 @@ public class TopicModelDto {
 	
 	private int topicId;
 	
+	private int evaluationId;
+	
 	private String topicName;
 	
 	private float weight;
@@ -25,6 +27,7 @@ public class TopicModelDto {
 	
 	public TopicModelDto(TopicModel topicModel, List<QuestionModel> questionModels) {
 		this.topicId = topicModel.getTopicId();
+		this.evaluationId = topicModel.getEvaluationModelId();
 		this.topicName = topicModel.getTopicName();
 		this.weight = topicModel.getWeight();
 		questionModelDtos = new ArrayList<QuestionModelDto>();

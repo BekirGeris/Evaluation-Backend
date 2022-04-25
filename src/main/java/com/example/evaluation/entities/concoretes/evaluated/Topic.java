@@ -21,7 +21,7 @@ public class Topic {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int topicId;
 	
-    private int evaluationId;
+	private int evaluationId;
 	
 	private String topicName;
 	

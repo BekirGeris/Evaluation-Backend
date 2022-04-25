@@ -22,7 +22,7 @@ import com.example.evaluation.entities.concoretes.evaluated.Topic;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/evaluationnmodels")
+@RequestMapping("/api/evaluated")
 public class EvaluatedController {
 
 	private EvaluatedService evaluatedService;

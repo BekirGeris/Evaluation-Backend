@@ -52,6 +52,7 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	
 	@Override
 	public Result addEvaluatedDto(EvaluatedDto evaluatedDto) {
+		
 	
 		return new SuccessResult("Değerlendirme Modeli Eklendi.");
 	}
