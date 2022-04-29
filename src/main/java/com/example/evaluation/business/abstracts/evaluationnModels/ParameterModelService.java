@@ -16,4 +16,6 @@ public interface ParameterModelService {
 	DataResult<ParameterModel> getByParameterModelId(int parameterModelId);
 	
 	Result addParameterModel(ParameterModel parameterModel);
+	
+	DataResult<List<ParameterModel>> getByParameterModelsUserId(int userId);
 }

@@ -21,6 +21,8 @@ public class ParameterModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int parameterModelId;
 	
+	private int userId;
+	
 	private String parameterModelName;
 	
 	private int poor1;

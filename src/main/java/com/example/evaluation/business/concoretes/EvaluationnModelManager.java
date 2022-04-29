@@ -82,7 +82,16 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 	}
 	
 	@Override
+	public DataResult<List<ParameterModel>> getByParameterModelsUserId(int userId) {
+		return new SuccessDataResult<List<ParameterModel>>(parameterModelDao.getByUserId(userId), "Parameter modeller getirildi.");
+	}
+	
+	@Override
 	public Result addParameterModel(ParameterModel parameterModel) {
+		if(parameterModelDao.getByParameterModelNameAndUserId(parameterModel.getParameterModelName(), parameterModel.getUserId()) != null) {
+			return new ErrorResult("Aynı ada sahip bir parametre modeli zaten var.");
+		}
+		
 		parameterModelDao.save(parameterModel);
 		return new SuccessResult("Parametreler Eklendi.");
 	}
