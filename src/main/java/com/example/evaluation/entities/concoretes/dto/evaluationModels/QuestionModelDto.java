@@ -20,6 +20,7 @@ public class QuestionModelDto {
 	private String question;
 	
 	public QuestionModelDto(QuestionModel questionModel) {
+		this.topicId = questionModel.getTopicId();
 		this.questionId = questionModel.getQuestionId();
 		this.weight = questionModel.getWeight();
 		this.question = questionModel.getQuestion();

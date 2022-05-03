@@ -16,6 +16,7 @@ import com.example.evaluation.business.abstracts.evaluated.TopicService;
 import com.example.evaluation.core.utillities.result.DataResult;
 import com.example.evaluation.core.utillities.result.Result;
 import com.example.evaluation.entities.concoretes.dto.evaluated.EvaluatedDto;
+import com.example.evaluation.entities.concoretes.evaluated.CalculateResult;
 import com.example.evaluation.entities.concoretes.evaluated.Evaluated;
 import com.example.evaluation.entities.concoretes.evaluated.Question;
 import com.example.evaluation.entities.concoretes.evaluated.Topic;
@@ -58,4 +59,13 @@ public class EvaluatedController {
 		return evaluatedService.addEvaluatedDto(evaluatedDto);
 	}
 	
+	@PostMapping("/evaluationCalculate")
+	public DataResult<CalculateResult> evaluationCalculate(@RequestBody EvaluatedDto evaluatedDto) {
+		return evaluatedService.evaluationCalculate(evaluatedDto);
+	}
+	
+	@GetMapping("/getEvaluatedDtoRequest")
+	public DataResult<EvaluatedDto> getEvaluatedDtoRequest(int evaluationId) {
+		return evaluatedService.getEvaluatedDtoRequest(evaluationId);
+	}
 }

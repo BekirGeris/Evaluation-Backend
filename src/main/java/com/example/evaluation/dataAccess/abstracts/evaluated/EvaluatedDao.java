@@ -10,5 +10,11 @@ import com.example.evaluation.entities.concoretes.evaluated.Evaluated;
 @Repository
 public interface EvaluatedDao extends JpaRepository<Evaluated, Integer>{
 
+	Evaluated getByEvaluatedFirstNameAndEvaluatedLastName(String evaluatedFirstName, String evaluatedLastName);
+	
+	Evaluated getByEvaluatedNumber(String evaluatedNumber);
+	
 	List<Evaluated> getByEvaluationId(int evaluationId);
+	
+	Evaluated findTopByOrderByEvaluatedIdDesc();
 }
