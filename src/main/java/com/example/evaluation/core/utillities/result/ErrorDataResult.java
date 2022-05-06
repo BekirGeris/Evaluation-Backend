@@ -6,6 +6,10 @@ public class ErrorDataResult<T> extends DataResult<T>{
 		super(data, false, 404);
 	}
 	
+	public ErrorDataResult(String message) {
+		super(null, false, message, 404);
+	}
+	
 	public ErrorDataResult(T data, String message) {
 		super(data, false, message, 404);
 	}

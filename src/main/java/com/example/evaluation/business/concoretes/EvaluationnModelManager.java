@@ -10,6 +10,7 @@ import com.example.evaluation.business.abstracts.evaluationnModels.ParameterMode
 import com.example.evaluation.business.abstracts.evaluationnModels.QuestionModelService;
 import com.example.evaluation.business.abstracts.evaluationnModels.TopicModelService;
 import com.example.evaluation.core.utillities.result.DataResult;
+import com.example.evaluation.core.utillities.result.ErrorDataResult;
 import com.example.evaluation.core.utillities.result.ErrorResult;
 import com.example.evaluation.core.utillities.result.Result;
 import com.example.evaluation.core.utillities.result.SuccessDataResult;
@@ -21,6 +22,7 @@ import com.example.evaluation.dataAccess.abstracts.evaluationnModels.TopicModelD
 import com.example.evaluation.entities.concoretes.dto.evaluationModels.EvaluationModelDto;
 import com.example.evaluation.entities.concoretes.dto.evaluationModels.QuestionModelDto;
 import com.example.evaluation.entities.concoretes.dto.evaluationModels.TopicModelDto;
+import com.example.evaluation.entities.concoretes.evaluated.CalculateResult;
 import com.example.evaluation.entities.concoretes.evaluationnModels.EvaluationModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.ParameterModel;
 import com.example.evaluation.entities.concoretes.evaluationnModels.QuestionModel;
@@ -101,6 +103,23 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 		
 		if(evaluationModelDao.getByUserIdAndEvaluationModelName(evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName()) != null) {
 			return new ErrorResult("Bu isme sahip bir değerlendirme modeli zaten var");
+		}
+		
+		int topicTotalWeight = 0;
+		for (TopicModelDto topicModelDto : evaluationModelDto.getTopicModelDtos()) {
+			topicTotalWeight += topicModelDto.getWeight();
+			int questionTotalWeight = 0;
+			for (QuestionModelDto questionModelDto : topicModelDto.getQuestionModelDtos()) {
+				questionTotalWeight += questionModelDto.getWeight();
+			}
+			
+			if(questionTotalWeight > 100) {
+				return new ErrorDataResult<CalculateResult>( "Konu altındada ki soru ağırlıkları toplamı 100'ü geçmemeli.");
+			}
+		}
+		
+		if(topicTotalWeight > 100) {
+			return new ErrorDataResult<CalculateResult>( "Konu ağırlıkları toplamı 100'ü geçmemeli.");
 		}
 		
 		EvaluationModel evaluationModel = new EvaluationModel(0, evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName(), evaluationModelDto.getDecs(), evaluationModelDto.getParameterModelId());

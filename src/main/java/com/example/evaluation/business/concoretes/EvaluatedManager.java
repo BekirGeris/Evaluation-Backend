@@ -18,6 +18,7 @@ import com.example.evaluation.core.utillities.result.SuccessResult;
 import com.example.evaluation.dataAccess.abstracts.evaluated.EvaluatedDao;
 import com.example.evaluation.dataAccess.abstracts.evaluated.QuestionDao;
 import com.example.evaluation.dataAccess.abstracts.evaluated.TopicDao;
+import com.example.evaluation.dataAccess.abstracts.evaluationnModels.ParameterModelDao;
 import com.example.evaluation.entities.concoretes.dto.evaluated.EvaluatedDto;
 import com.example.evaluation.entities.concoretes.dto.evaluated.QuestionDto;
 import com.example.evaluation.entities.concoretes.dto.evaluated.TopicDto;
@@ -27,6 +28,7 @@ import com.example.evaluation.entities.concoretes.evaluated.CalculateResult;
 import com.example.evaluation.entities.concoretes.evaluated.Evaluated;
 import com.example.evaluation.entities.concoretes.evaluated.Question;
 import com.example.evaluation.entities.concoretes.evaluated.Topic;
+import com.example.evaluation.entities.concoretes.evaluationnModels.ParameterModel;
 
 @Service
 public class EvaluatedManager implements EvaluatedService, TopicService, QuestionService{
@@ -34,14 +36,16 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	private EvaluatedDao evaluatedDao;
 	private TopicDao topicDao;
 	private QuestionDao questionDao;
+	private ParameterModelDao parameterModelDao;
 	private EvaluationnModelManager evaluationnModelManager;
 	
 	@Autowired
-	public EvaluatedManager(EvaluatedDao evaluatedDao, TopicDao topicDao, QuestionDao questionDao, EvaluationnModelManager evaluationnModelManager) {
+	public EvaluatedManager(EvaluatedDao evaluatedDao, TopicDao topicDao, QuestionDao questionDao, ParameterModelDao parameterModelDao, EvaluationnModelManager evaluationnModelManager) {
 		super();
 		this.evaluatedDao = evaluatedDao;
 		this.topicDao = topicDao;
 		this.questionDao = questionDao;
+		this.parameterModelDao = parameterModelDao;
 		this.evaluationnModelManager = evaluationnModelManager;
 	}
 
@@ -65,7 +69,7 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	
 	@Override
 	public Result addEvaluatedDto(EvaluatedDto evaluatedDto) {
-		if (evaluatedDao.getByEvaluatedNumber(evaluatedDto.getEvaluatedNumber()) == null) {
+		if (evaluatedDao.getByEvaluatedNumberAndEvaluationId(evaluatedDto.getEvaluatedNumber(), evaluatedDto.getEvaluationId()) == null) {
 			
 			evaluatedDto.setEvaluatedPoint(evaluationCalculate(evaluatedDto).getData().getEvaluatedPoint());
 			evaluatedDao.save(new Evaluated(evaluatedDto));
@@ -90,10 +94,10 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	
 	@Override
 	public DataResult<CalculateResult> evaluationCalculate(EvaluatedDto evaluatedDto) {
-		System.out.print(evaluatedDto.toString());
-		
 		float cal = 0;
 		float questionAnsver = 0;
+		
+		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
 		
 		for (TopicDto topicDto : evaluatedDto.getTopicDtos()) {
 			for (QuestionDto questionDto : topicDto.getQuestionDtos()) {

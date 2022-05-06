@@ -12,7 +12,7 @@ public interface EvaluatedDao extends JpaRepository<Evaluated, Integer>{
 
 	Evaluated getByEvaluatedFirstNameAndEvaluatedLastName(String evaluatedFirstName, String evaluatedLastName);
 	
-	Evaluated getByEvaluatedNumber(String evaluatedNumber);
+	Evaluated getByEvaluatedNumberAndEvaluationId(String evaluatedNumber, int evaluationId);
 	
 	List<Evaluated> getByEvaluationId(int evaluationId);
 	
