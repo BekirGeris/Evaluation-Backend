@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.evaluation.business.abstracts.SessionService;
 import com.example.evaluation.business.abstracts.UserService;
 import com.example.evaluation.core.utillities.result.DataResult;
-import com.example.evaluation.core.utillities.result.ErrorDataResult;
-import com.example.evaluation.core.utillities.result.ErrorResult;
 import com.example.evaluation.core.utillities.result.Result;
-import com.example.evaluation.core.utillities.result.SuccessDataResult;
-import com.example.evaluation.core.utillities.result.SuccessResult;
 import com.example.evaluation.entities.concoretes.Session;
 import com.example.evaluation.entities.concoretes.User;
 
