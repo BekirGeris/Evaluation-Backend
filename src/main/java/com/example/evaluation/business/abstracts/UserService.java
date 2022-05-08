@@ -14,4 +14,6 @@ public interface UserService {
 	DataResult<User> getByUserNameAndPassword(String userName, String password);
 
 	Result addUser(User user);
+	
+	DataResult<User> getUserBySessionUUID(String sessionUUID);
 }

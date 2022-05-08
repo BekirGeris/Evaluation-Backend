@@ -8,9 +8,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.evaluation.business.abstracts.SessionService;
 import com.example.evaluation.business.abstracts.UserService;
 import com.example.evaluation.core.utillities.result.DataResult;
+import com.example.evaluation.core.utillities.result.ErrorDataResult;
+import com.example.evaluation.core.utillities.result.ErrorResult;
 import com.example.evaluation.core.utillities.result.Result;
+import com.example.evaluation.core.utillities.result.SuccessDataResult;
+import com.example.evaluation.core.utillities.result.SuccessResult;
+import com.example.evaluation.entities.concoretes.Session;
 import com.example.evaluation.entities.concoretes.User;
 
 @CrossOrigin
@@ -19,11 +25,13 @@ import com.example.evaluation.entities.concoretes.User;
 public class UserController {
 
 	private UserService userService;
+	private SessionService sessionService;
 
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserService userService, SessionService sessionService) {
 		super();
 		this.userService = userService;
+		this.sessionService = sessionService;
 	}
 
 	@GetMapping("/getByUserId")
@@ -39,5 +47,25 @@ public class UserController {
 	@PostMapping("/addUser")
 	public Result addUser(@RequestBody User user) {
 		return userService.addUser(user);
+	}
+	
+	@GetMapping("/getBySessionUUID")
+	public DataResult<Session> getBySessionUUID(String sessionUUID) {
+		return sessionService.getBySessionUUID(sessionUUID);
+	}
+
+	@PostMapping("/addSession")
+	public Result addrandomUUID(int userId) {
+		return sessionService.addrandomUUID(userId);
+	}
+	
+	@GetMapping("/getUserBySessionUUID")
+	public DataResult<User> getUserBySessionUUID(String sessionUUID) {
+		return userService.getUserBySessionUUID(sessionUUID);
+	}
+	
+	@PostMapping("/deleteSession")
+	public Result deleteSession(String sessionUUID) {
+		return sessionService.deleteSession(sessionUUID);
 	}
 }
