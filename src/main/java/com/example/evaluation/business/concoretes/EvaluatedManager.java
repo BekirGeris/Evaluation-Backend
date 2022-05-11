@@ -1,5 +1,6 @@
 package com.example.evaluation.business.concoretes;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.evaluation.business.abstracts.evaluated.EvaluatedService;
 import com.example.evaluation.business.abstracts.evaluated.QuestionService;
 import com.example.evaluation.business.abstracts.evaluated.TopicService;
+import com.example.evaluation.core.utillities.fuzzyLogic.EvaluationFuzzyModel;
 import com.example.evaluation.core.utillities.result.DataResult;
 import com.example.evaluation.core.utillities.result.ErrorDataResult;
 import com.example.evaluation.core.utillities.result.ErrorResult;
@@ -96,6 +98,14 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	public DataResult<CalculateResult> evaluationCalculate(EvaluatedDto evaluatedDto) {
 		float cal = 0;
 		float questionAnsver = 0;
+		System.out.println("sdevsdvbsdvb");
+		try {
+			System.out.println("sdevsdvbsdvb");
+			EvaluationFuzzyModel evaluationFuzzyModel = new EvaluationFuzzyModel(4);
+			return new SuccessDataResult<CalculateResult>(new CalculateResult(evaluationFuzzyModel.getScore()), "Hedddddsaplama yapıldı.");
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		} 
 		
 		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
 		
@@ -106,7 +116,7 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 			cal += topicDto.getWeight() * questionAnsver;
 		}
 		
-		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal), "Hesaplama yapıldı.");
+		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal), "Hesaplama yapıldı...");
 	}
 
 	@Override
