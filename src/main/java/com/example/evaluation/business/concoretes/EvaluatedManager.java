@@ -97,24 +97,27 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	@Override
 	public DataResult<CalculateResult> evaluationCalculate(EvaluatedDto evaluatedDto) {
 		float cal = 0;
-		float questionAnsver = 0;
-		System.out.println("sdevsdvbsdvb");
+		EvaluationFuzzyModel evaluationFuzzyModel = null;
+		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
+
 		try {
-			System.out.println("sdevsdvbsdvb");
-			EvaluationFuzzyModel evaluationFuzzyModel = new EvaluationFuzzyModel(4);
-			return new SuccessDataResult<CalculateResult>(new CalculateResult(evaluationFuzzyModel.getScore()), "Hedddddsaplama yapıldı.");
+			evaluationFuzzyModel = new EvaluationFuzzyModel();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-		} 
-		
-		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
-		
-		for (TopicDto topicDto : evaluatedDto.getTopicDtos()) {
-			for (QuestionDto questionDto : topicDto.getQuestionDtos()) {
-				 questionAnsver += questionDto.getWeight() + questionDto.getAnswer();
-			}
-			cal += topicDto.getWeight() * questionAnsver;
+			return new ErrorDataResult<>("Genel Hata");
 		}
+		
+		if (evaluationFuzzyModel != null) {
+			for (TopicDto topicDto : evaluatedDto.getTopicDtos()) {
+				float questionAnsver = 0;
+				for (QuestionDto questionDto : topicDto.getQuestionDtos()) {
+					 questionAnsver += (questionDto.getWeight() / 100) * questionDto.getAnswer();
+				}
+				cal += (topicDto.getWeight() / 100) * evaluationFuzzyModel.evaluate(questionAnsver);
+			}
+		}
+		
+		System.out.println(" cal : " + cal);
 		
 		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal), "Hesaplama yapıldı...");
 	}

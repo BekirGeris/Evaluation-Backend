@@ -11,17 +11,18 @@ public class EvaluationFuzzyModel {
 	private float point;
 	private float score;
 	
-	public EvaluationFuzzyModel(float point) throws URISyntaxException {
+	public EvaluationFuzzyModel() throws URISyntaxException {
 		super();
-		this.point = point;
 		
 		File dosya = new File(getClass().getResource("fuzzyfile.fcl").toURI());
 		fis = FIS.load(dosya.getPath());
+	}
+	
+	public float evaluate(float point) {
 		fis.setVariable("point", point);
-		
 		fis.evaluate();
-		
-		this.score = Math.round(fis.getVariable("tip").getValue());
+		this.score = Math.round(fis.getVariable("tip").getValue()) + 3;
+		return getScore();
 	}
 
 	public FIS getFis() {

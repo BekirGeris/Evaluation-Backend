@@ -113,13 +113,13 @@ public class EvaluationnModelManager implements EvaluationModelService, Paramete
 				questionTotalWeight += questionModelDto.getWeight();
 			}
 			
-			if(questionTotalWeight > 100) {
-				return new ErrorDataResult<CalculateResult>( "Konu altındada ki soru ağırlıkları toplamı 100'ü geçmemeli.");
+			if(questionTotalWeight != 100) {
+				return new ErrorDataResult<CalculateResult>( "Konu altındada ki soru ağırlıkları toplamı 100 olmalıdır.");
 			}
 		}
 		
-		if(topicTotalWeight > 100) {
-			return new ErrorDataResult<CalculateResult>( "Konu ağırlıkları toplamı 100'ü geçmemeli.");
+		if(topicTotalWeight != 100) {
+			return new ErrorDataResult<CalculateResult>( "Konu ağırlıkları toplamı 100 olmalıdır.");
 		}
 		
 		EvaluationModel evaluationModel = new EvaluationModel(0, evaluationModelDto.getUserId(), evaluationModelDto.getEvaluationModelName(), evaluationModelDto.getDecs(), evaluationModelDto.getParameterModelId());
