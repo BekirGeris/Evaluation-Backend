@@ -101,8 +101,8 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
 
 		try {
-			evaluationFuzzyModel = new EvaluationFuzzyModel();
-		} catch (URISyntaxException e) {
+			evaluationFuzzyModel = new EvaluationFuzzyModel(parameterModel);
+		} catch (Exception e) {
 			e.printStackTrace();
 			return new ErrorDataResult<>("Genel Hata");
 		}

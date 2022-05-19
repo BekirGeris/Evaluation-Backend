@@ -23,7 +23,7 @@ class EvaluationApplicationTests {
 			try {
 				EvaluationFuzzyModel evaluationFuzzyModel = new EvaluationFuzzyModel();
 				System.out.println("Input " + inputCal + " caled : " + evaluationFuzzyModel.evaluate(inputCal));
-			} catch (URISyntaxException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
