@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "ParameterModels")
 public class ParameterModel {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private int parameterModelId;

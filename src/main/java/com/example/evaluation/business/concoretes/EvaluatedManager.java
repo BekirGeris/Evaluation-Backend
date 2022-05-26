@@ -100,6 +100,7 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 		EvaluationFuzzyModel evaluationFuzzyModel = null;
 		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
 
+		System.out.println(parameterModel);
 		try {
 			evaluationFuzzyModel = new EvaluationFuzzyModel(parameterModel);
 		} catch (Exception e) {

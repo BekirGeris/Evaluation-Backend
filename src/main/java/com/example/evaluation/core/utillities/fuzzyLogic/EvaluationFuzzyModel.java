@@ -1,7 +1,5 @@
 package com.example.evaluation.core.utillities.fuzzyLogic;
 
-import java.io.File;
-import java.net.URISyntaxException;
 
 import org.antlr.runtime.RecognitionException;
 
@@ -16,20 +14,20 @@ public class EvaluationFuzzyModel {
 	private float score;
 	private String fuzzyFile;
 	
-	public EvaluationFuzzyModel(ParameterModel parameterModel) throws URISyntaxException, RecognitionException {
+	public EvaluationFuzzyModel(ParameterModel parameterModel) throws RecognitionException{
 		super();
 		parameterModel.changeFormat();
-		fuzzyFile = "FUNCTION_BLOCK fuzzyfile	// Block definition (there may be more than one block per file)\r\n"
+		fuzzyFile = "FUNCTION_BLOCK fuzzyfile			// Block definition (there may be more than one block per file)\r\n"
 						+ "\r\n"
-						+ "VAR_INPUT				// Define input variables\r\n"
+						+ "VAR_INPUT					// Define input variables\r\n"
 						+ "	point : REAL;\r\n"
 						+ "END_VAR\r\n"
 						+ "\r\n"
-						+ "VAR_OUTPUT				// Define output variable\r\n"
+						+ "VAR_OUTPUT					// Define output variable\r\n"
 						+ "	tip : REAL;\r\n"
 						+ "END_VAR\r\n"
 						+ "\r\n"
-						+ "FUZZIFY point			// Fuzzify input variable 'point': {'poor', 'good' , 'excellent'}\r\n"
+						+ "FUZZIFY point				// Fuzzify input variable 'point': {'poor', 'good' , 'excellent'}\r\n"
 						+ "	TERM poor := trape " + parameterModel.getPoor1() + " " + parameterModel.getPoor2() + " " + parameterModel.getPoor3() + " " + parameterModel.getPoor4() + ";\r\n"
 						+ "	TERM unsatisfactory := trape " + parameterModel.getUnsatisfactory1() + " " + parameterModel.getUnsatisfactory2() + " " + parameterModel.getUnsatisfactory3() + " " + parameterModel.getUnsatisfactory4() + ";\r\n"
 						+ "	TERM average := trape " + parameterModel.getAverage1() + " " + parameterModel.getAverage2() + " " + parameterModel.getAverage3() + " " + parameterModel.getAverage4() + ";\r\n"
@@ -37,21 +35,21 @@ public class EvaluationFuzzyModel {
 						+ "	TERM excellent := trape " + parameterModel.getExcellent1() + " " + parameterModel.getExcellent2() + " " + parameterModel.getExcellent3() + " " + parameterModel.getExcellent4() + ";\r\n"
 						+ "END_FUZZIFY\r\n"
 						+ "\r\n"
-						+ "DEFUZZIFY tip			// Defzzzify output variable 'tip' : {'poor', 'average', 'generous' }\r\n"
+						+ "DEFUZZIFY tip				// Defzzzify output variable 'tip' : {'poor', 'average', 'generous' }\r\n"
 						+ "	TERM poor := trape 0 0 20 30;\r\n"
 						+ "	TERM unsatisfactory := trian 20 40 60;\r\n"
 						+ "	TERM average := trian 40 60 90;\r\n"
 						+ "	TERM good := trian 60 90 100;\r\n"
 						+ "	TERM excellent := trian 90 100 100;\r\n"
 						+ "	\r\n"
-						+ "	METHOD : COG;		// Use 'Center Of Gravity' defuzzification method\r\n"
-						+ "	DEFAULT := 0;		// Default value is 0 (if no rule activates defuzzifier)\r\n"
+						+ "	METHOD : COG;				// Use 'Center Of Gravity' defuzzification method\r\n"
+						+ "	DEFAULT := 0;				// Default value is 0 (if no rule activates defuzzifier)\r\n"
 						+ "END_DEFUZZIFY\r\n"
 						+ "\r\n"
 						+ "RULEBLOCK No1\r\n"
-						+ "	AND : MIN;			// Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)\r\n"
-						+ "	ACT : MIN;			// Use 'min' activation method\r\n"
-						+ "	ACCU : MAX;			// Use 'max' accumulation method\r\n"
+						+ "	AND : MIN;					// Use 'min' for 'and' (also implicit use 'max' for 'or' to fulfill DeMorgan's Law)\r\n"
+						+ "	ACT : MIN;					// Use 'min' activation method\r\n"
+						+ "	ACCU : MAX;					// Use 'max' accumulation method\r\n"
 						+ "\r\n"
 						+ "	RULE 1 : IF point IS poor THEN tip IS poor;\r\n"
 						+ "	RULE 2 : IF point IS unsatisfactory THEN tip IS unsatisfactory;\r\n"
@@ -66,11 +64,16 @@ public class EvaluationFuzzyModel {
 	}
 	
 	public float evaluate(float point) {
+		//return 20 * point;
 		fis.setVariable("point", point);
 		fis.evaluate();
-		this.score = Math.round(fis.getVariable("tip").getValue()) + 3;
+		this.score = Math.round(fis.getVariable("tip").getValue()) + (Math.round(fis.getVariable("tip").getValue()) == 0 ? 0 : 3);
 		System.out.println(this);
 		return getScore();
+	}
+	
+	public float evaluate(int multiplyValue, float point) {
+		return multiplyValue * point;
 	}
 
 	public FIS getFis() {
