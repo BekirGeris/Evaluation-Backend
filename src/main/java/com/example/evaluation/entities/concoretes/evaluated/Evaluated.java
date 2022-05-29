@@ -34,6 +34,8 @@ public class Evaluated {
     private String evaluatedNumber;
 	
     private float evaluatedPoint;
+    
+    private String evaluatedStatus;
 
 	public Evaluated(EvaluatedDto evaluatedDto) {
 		super();
@@ -43,5 +45,6 @@ public class Evaluated {
 		this.evaluatedLastName = evaluatedDto.getEvaluatedLastName();
 		this.evaluatedNumber = evaluatedDto.getEvaluatedNumber();
 		this.evaluatedPoint = evaluatedDto.getEvaluatedPoint();
+		this.evaluatedStatus = evaluatedDto.getEvaluatedStatus();
 	}
 }

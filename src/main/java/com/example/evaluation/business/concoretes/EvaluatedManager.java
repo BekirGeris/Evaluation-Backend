@@ -72,8 +72,9 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	@Override
 	public Result addEvaluatedDto(EvaluatedDto evaluatedDto) {
 		if (evaluatedDao.getByEvaluatedNumberAndEvaluationId(evaluatedDto.getEvaluatedNumber(), evaluatedDto.getEvaluationId()) == null) {
-			
-			evaluatedDto.setEvaluatedPoint(evaluationCalculate(evaluatedDto).getData().getEvaluatedPoint());
+			CalculateResult calculateResult = evaluationCalculate(evaluatedDto).getData();
+			evaluatedDto.setEvaluatedPoint(calculateResult.getEvaluatedPoint());
+			evaluatedDto.setEvaluatedStatus(calculateResult.getEvaluatedStatus());
 			evaluatedDao.save(new Evaluated(evaluatedDto));
 			Evaluated evaluated = evaluatedDao.findTopByOrderByEvaluatedIdDesc();
 			
@@ -97,10 +98,11 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 	@Override
 	public DataResult<CalculateResult> evaluationCalculate(EvaluatedDto evaluatedDto) {
 		float cal = 0;
+		String status = "";
+		
 		EvaluationFuzzyModel evaluationFuzzyModel = null;
 		ParameterModel parameterModel = parameterModelDao.getById(evaluationnModelManager.getEvaluationWithEvaluationModelId(evaluatedDto.getEvaluationId()).getData().getParameterModelId());
 
-		System.out.println(parameterModel);
 		try {
 			evaluationFuzzyModel = new EvaluationFuzzyModel(parameterModel);
 		} catch (Exception e) {
@@ -114,13 +116,16 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 				for (QuestionDto questionDto : topicDto.getQuestionDtos()) {
 					 questionAnsver += (questionDto.getWeight() / 100) * questionDto.getAnswer();
 				}
-				cal += (topicDto.getWeight() / 100) * evaluationFuzzyModel.evaluate(questionAnsver);
+				cal += (topicDto.getWeight() / 100) * questionAnsver * 20;
 			}
 		}
 		
-		System.out.println(" cal : " + cal);
+		System.out.println(" cal : " + evaluationFuzzyModel.evaluate(cal) + " status : " + evaluationFuzzyModel.getStatus());
 		
-		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal), "Hesaplama yapıldı...");
+		evaluationFuzzyModel.evaluate(cal);
+		status = evaluationFuzzyModel.getStatus();
+		
+		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal, status), "Hesaplama yapıldı...");
 	}
 
 	@Override

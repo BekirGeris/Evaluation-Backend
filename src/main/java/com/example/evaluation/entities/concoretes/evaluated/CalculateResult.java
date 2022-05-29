@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class CalculateResult {
 
 	private float evaluatedPoint;
+	
+	private String evaluatedStatus;
 }

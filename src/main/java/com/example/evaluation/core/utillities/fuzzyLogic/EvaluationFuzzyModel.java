@@ -13,10 +13,11 @@ public class EvaluationFuzzyModel {
 	private float point;
 	private float score;
 	private String fuzzyFile;
+	private String status;
 	
 	public EvaluationFuzzyModel(ParameterModel parameterModel) throws RecognitionException{
 		super();
-		parameterModel.changeFormat();
+		//parameterModel.changeFormat();
 		fuzzyFile = "FUNCTION_BLOCK fuzzyfile			// Block definition (there may be more than one block per file)\r\n"
 						+ "\r\n"
 						+ "VAR_INPUT					// Define input variables\r\n"
@@ -64,12 +65,36 @@ public class EvaluationFuzzyModel {
 	}
 	
 	public float evaluate(float point) {
-		//return 20 * point;
 		fis.setVariable("point", point);
 		fis.evaluate();
 		this.score = Math.round(fis.getVariable("tip").getValue()) + (Math.round(fis.getVariable("tip").getValue()) == 0 ? 0 : 3);
-		System.out.println(this);
+		this.status = checkStatus(point, fis.getVariable("tip").getMembership("poor"), 
+								fis.getVariable("tip").getMembership("unsatisfactory"), 
+								fis.getVariable("tip").getMembership("average"), 
+								fis.getVariable("tip").getMembership("good"),
+								fis.getVariable("tip").getMembership("excellent"));
 		return getScore();
+	}
+	
+	private String checkStatus(float point, double p, double u, double a, double g, double e) {
+		if (point == 100) {
+			return "Excellent";
+		}
+		double var = Math.max(p, Math.max(u, Math.max(a, Math.max(g, e))));
+		
+		if (var == p) {
+			return "Poor";
+		} else if (var == u) {
+			return "Unsatisfactory";
+		} else if (var == a) {
+			return "Average";
+		} else if (var == g) {
+			return "Good";
+		} else if (var == e) {
+			return "Excellent";
+		}
+		
+		return "Belirlenemedi";
 	}
 	
 	public float evaluate(int multiplyValue, float point) {
@@ -100,6 +125,14 @@ public class EvaluationFuzzyModel {
 		this.score = score;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Score : " + Math.round(fis.getVariable("tip").getValue());

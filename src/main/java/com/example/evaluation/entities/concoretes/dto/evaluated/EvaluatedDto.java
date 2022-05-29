@@ -25,6 +25,8 @@ public class EvaluatedDto {
 	
     private float evaluatedPoint;
     
+    private String evaluatedStatus;
+    
     private List<TopicDto> topicDtos;
     
 	public EvaluatedDto(Evaluated evaluated) {
@@ -34,6 +36,7 @@ public class EvaluatedDto {
 		this.evaluatedLastName = evaluated.getEvaluatedLastName();
 		this.evaluatedNumber = evaluated.getEvaluatedNumber();
 		this.evaluatedPoint = evaluated.getEvaluatedPoint();
+		this.evaluatedStatus = evaluated.getEvaluatedStatus();
 		topicDtos = new ArrayList<TopicDto>();
 	}
 
