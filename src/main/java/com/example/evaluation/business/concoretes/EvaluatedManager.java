@@ -1,6 +1,7 @@
 package com.example.evaluation.business.concoretes;
 
 import java.net.URISyntaxException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,7 +126,7 @@ public class EvaluatedManager implements EvaluatedService, TopicService, Questio
 		evaluationFuzzyModel.evaluate(cal);
 		status = evaluationFuzzyModel.getStatus();
 		
-		return new SuccessDataResult<CalculateResult>(new CalculateResult(cal, status), "Hesaplama yapıldı...");
+		return new SuccessDataResult<CalculateResult>(new CalculateResult(Float.parseFloat(new DecimalFormat("##.##").format(cal)), status), "Hesaplama yapıldı...");
 	}
 
 	@Override
