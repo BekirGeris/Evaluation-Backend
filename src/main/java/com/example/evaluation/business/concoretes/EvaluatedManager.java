@@ -1,6 +1,5 @@
 package com.example.evaluation.business.concoretes;
 
-import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
